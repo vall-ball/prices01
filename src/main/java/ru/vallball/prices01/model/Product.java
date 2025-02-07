@@ -5,7 +5,6 @@ public class Product {
 	private String name;
 	private String producer;
 	private Category category;
-	private int costInRubles;
 	private int weightInGrams;
 	
 
