@@ -9,11 +9,9 @@ public interface CategoryService {
 
 	List<Category> list();
 
-	void delete(Long id);
-
-	void update(Category category);
-
-	Category findCategoryById(Long id);
+	void update(String name, Category category);
 	
 	Category findCategoryByName(String name);
+	
+	void deleteCategoryByName(String name);
 }

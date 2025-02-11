@@ -6,4 +6,8 @@ import ru.vallball.prices01.model.Category;
 
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 
+	public Category findCategoryByName(String name);
+
+	public long deleteCategoryByName(String name);
+
 }

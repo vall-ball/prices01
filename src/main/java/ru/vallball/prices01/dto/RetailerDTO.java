@@ -1,7 +1,6 @@
 package ru.vallball.prices01.dto;
 
-public class CategoryDTO {
-
+public class RetailerDTO {
 	private String name;
 
 	public String getName() {
@@ -11,5 +10,4 @@ public class CategoryDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
-
 }
