@@ -49,3 +49,31 @@ TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.manufacturers
     OWNER to postgres;
+    
+-- Table: public.products
+
+-- DROP TABLE IF EXISTS public.products;
+
+CREATE TABLE IF NOT EXISTS public.products
+(
+    id integer NOT NULL DEFAULT nextval('products_id_seq'::regclass),
+    name text COLLATE pg_catalog."default" NOT NULL,
+    manufacturer_id integer,
+    category_id integer,
+    weight_in_grams integer,
+    CONSTRAINT products_pkey PRIMARY KEY (id),
+    CONSTRAINT products_name_key UNIQUE (name),
+    CONSTRAINT category FOREIGN KEY (category_id)
+        REFERENCES public.categories (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT manufacturer FOREIGN KEY (manufacturer_id)
+        REFERENCES public.manufacturers (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.products
+    OWNER to postgres;

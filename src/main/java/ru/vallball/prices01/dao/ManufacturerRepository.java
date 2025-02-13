@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import ru.vallball.prices01.model.Manufacturer;
 
-public interface ManufacturerRepository extends JpaRepository<Manufacturer, Long>{
+public interface ManufacturerRepository extends JpaRepository<Manufacturer, Long> {
 	
 	public Manufacturer findManufacturerByName(String name);
 

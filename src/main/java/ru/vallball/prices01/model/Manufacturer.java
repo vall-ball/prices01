@@ -1,5 +1,6 @@
 package ru.vallball.prices01.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,6 +15,7 @@ public class Manufacturer {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@NotNull
+	@Column(unique=true)
 	private String name;
 
 	public String getName() {

@@ -19,13 +19,13 @@ public class Product {
 	private Long id;
 	
 	@NotNull
+	@Column(unique=true)
 	private String name;
 	
 	@ManyToOne
 	@JoinColumn(name = "manufacturer_id")
 	private Manufacturer manufacturer;
 	
-	@ManyToOne
 	@JoinColumn(name = "category_id")
 	private Category category;
 	
