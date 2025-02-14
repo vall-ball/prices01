@@ -2,6 +2,8 @@ package ru.vallball.prices01.service;
 
 import java.util.List;
 
+import ru.vallball.prices01.model.Category;
+import ru.vallball.prices01.model.Manufacturer;
 import ru.vallball.prices01.model.Product;
 
 public interface ProductService {
@@ -15,5 +17,9 @@ public interface ProductService {
 	Product findProductByName(String name);
 
 	void deleteProductByName(String name);
+	
+	List<Product> listOfProductsByCategory(Category category);
+	
+	List<Product> listOfProductsByManufacturer(Manufacturer manufacturer);
 
 }

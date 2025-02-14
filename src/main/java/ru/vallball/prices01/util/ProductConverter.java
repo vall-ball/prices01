@@ -7,8 +7,16 @@ public class ProductConverter {
 	public static Product convertToProduct (ProductDTO productDTO) {
 		Product product = new Product();
 		product.setName(productDTO.getName());
-		product.setCategory(CategoryConverter.convertToCategory(productDTO.getCategoryDto()));
-		product.setManufacturer(ManufacturerConverter.convertToManufacturer(productDTO.getManufacturerDto()));
+		if (productDTO.getCategoryDto() == null) {
+			product.setCategory(null);
+		} else {
+			product.setCategory(CategoryConverter.convertToCategory(productDTO.getCategoryDto()));
+		}
+		if (productDTO.getManufacturerDto() == null) {
+			product.setManufacturer(null);
+		} else {
+			product.setManufacturer(ManufacturerConverter.convertToManufacturer(productDTO.getManufacturerDto()));
+		}
 		product.setWeightInGrams(productDTO.getWeightInGrams());
 		return product;
 	}
@@ -16,8 +24,16 @@ public class ProductConverter {
 	public static ProductDTO convertToProductDto(Product product) {
 		ProductDTO dto = new ProductDTO();
 		dto.setName(product.getName());
-		dto.setCategoryDto(CategoryConverter.convertToCategoryDto(product.getCategory()));
-		dto.setManufacturerDto(ManufacturerConverter.convertToManufacturerDto(product.getManufacturer()));
+		if (product.getCategory() == null) {
+			dto.setCategoryDto(null);
+		} else {
+			dto.setCategoryDto(CategoryConverter.convertToCategoryDto(product.getCategory()));
+		}
+		if (product.getManufacturer() == null) {
+			dto.setManufacturerDto(null);
+		} else {
+			dto.setManufacturerDto(ManufacturerConverter.convertToManufacturerDto(product.getManufacturer()));
+		}
 		dto.setWeightInGrams(product.getWeightInGrams());
 		return dto;
 	}

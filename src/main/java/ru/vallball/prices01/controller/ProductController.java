@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
+import ru.vallball.prices01.dao.CategoryRepository;
+import ru.vallball.prices01.dao.ManufacturerRepository;
 import ru.vallball.prices01.dto.ProductDTO;
 import ru.vallball.prices01.model.Product;
 import ru.vallball.prices01.service.ProductService;
@@ -26,10 +28,17 @@ import ru.vallball.prices01.util.ProductConverter;
 @RestController
 @RequestMapping("products")
 public class ProductController {
-	
+
 	@Autowired
 	ProductService productService;
 	
+	@Autowired
+	CategoryRepository categoryRepository;
+	
+	@Autowired
+	ManufacturerRepository manufacturerRepository;
+
+
 	@GetMapping
 	public List<ProductDTO> list() {
 		List<ProductDTO> list = new ArrayList<>();
@@ -64,9 +73,10 @@ public class ProductController {
 		}
 		return new ResponseEntity<>("Product is deleted successfully", HttpStatus.ACCEPTED);
 	}
-	
+
 	@PutMapping("{nameOfProduct}")
-	public ResponseEntity<Object> update(@PathVariable(value = "nameOfProduct") String name, @RequestBody ProductDTO productDto) {
+	public ResponseEntity<Object> update(@PathVariable(value = "nameOfProduct") String name,
+			@RequestBody ProductDTO productDto) {
 		try {
 			productService.update(name, ProductConverter.convertToProduct(productDto));
 		} catch (NoSuchElementException e) {
@@ -75,6 +85,24 @@ public class ProductController {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 		return new ResponseEntity<>("Product is updated successfully", HttpStatus.ACCEPTED);
+	}
+
+	@GetMapping("/category/{nameOfCategory}")
+	public List<ProductDTO> listOfProductsByCategory(@PathVariable(value = "nameOfCategory") String name) {
+		List<ProductDTO> list = new ArrayList<>();
+		for (Product p : productService.listOfProductsByCategory(categoryRepository.findCategoryByName(name))) {
+			list.add(ProductConverter.convertToProductDto(p));
+		}
+		return list;
+	}
+	
+	@GetMapping("/manufacturer/{nameOfManufacturer}")
+	public List<ProductDTO> listOfProductsByManufacturer(@PathVariable(value = "nameOfManufacturer") String name) {
+		List<ProductDTO> list = new ArrayList<>();
+		for (Product p : productService.listOfProductsByManufacturer(manufacturerRepository.findManufacturerByName(name))) {
+			list.add(ProductConverter.convertToProductDto(p));
+		}
+		return list;
 	}
 
 }

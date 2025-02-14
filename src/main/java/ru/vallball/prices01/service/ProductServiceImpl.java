@@ -10,26 +10,31 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.vallball.prices01.dao.CategoryRepository;
 import ru.vallball.prices01.dao.ManufacturerRepository;
 import ru.vallball.prices01.dao.ProductRepository;
+import ru.vallball.prices01.model.Category;
+import ru.vallball.prices01.model.Manufacturer;
 import ru.vallball.prices01.model.Product;
 
 @Service
 @Transactional
 public class ProductServiceImpl implements ProductService {
-	
+
 	@Autowired
 	ProductRepository productRepository;
-	
+
 	@Autowired
 	CategoryRepository categoryRepository;
-	
+
 	@Autowired
 	ManufacturerRepository manufacturerRepository;
 
-
 	@Override
 	public void save(Product product) {
-		product.setCategory(categoryRepository.findCategoryByName(product.getCategory().getName()));
-		product.setManufacturer(manufacturerRepository.findManufacturerByName(product.getManufacturer().getName()));
+		if (product.getCategory() != null) {
+			product.setCategory(categoryRepository.findCategoryByName(product.getCategory().getName()));
+		}
+		if (product.getManufacturer() != null) {
+			product.setManufacturer(manufacturerRepository.findManufacturerByName(product.getManufacturer().getName()));
+		}
 		productRepository.save(product);
 	}
 
@@ -43,7 +48,8 @@ public class ProductServiceImpl implements ProductService {
 		Product productForUpdate = productRepository.findProductByName(name);
 		productForUpdate.setName(product.getName());
 		productForUpdate.setCategory(categoryRepository.findCategoryByName(product.getCategory().getName()));
-		productForUpdate.setManufacturer(manufacturerRepository.findManufacturerByName(product.getManufacturer().getName()));
+		productForUpdate
+				.setManufacturer(manufacturerRepository.findManufacturerByName(product.getManufacturer().getName()));
 		productForUpdate.setWeightInGrams(product.getWeightInGrams());
 		productRepository.save(productForUpdate);
 	}
@@ -58,7 +64,17 @@ public class ProductServiceImpl implements ProductService {
 		long l = productRepository.deleteProductByName(name);
 		if (l == 0) {
 			throw new EmptyResultDataAccessException((int) l);
-		}	
+		}
+	}
+
+	@Override
+	public List<Product> listOfProductsByCategory(Category category) {
+		return productRepository.findByCategory(category);
+	}
+
+	@Override
+	public List<Product> listOfProductsByManufacturer(Manufacturer manufacturer) {
+		return productRepository.findByManufacturer(manufacturer);
 	}
 
 }
