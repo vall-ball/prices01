@@ -4,6 +4,17 @@ package ru.vallball.prices01.dto;
 
 public class ProductDTO {
 	
+	public ProductDTO(String name, ManufacturerDTO manufacturerDto, CategoryDTO categoryDto, int weightInGrams) {
+		this.name = name;
+		this.manufacturerDto = manufacturerDto;
+		this.categoryDto = categoryDto;
+		this.weightInGrams = weightInGrams;
+	}
+	public ProductDTO() {
+		
+	}
+	
+
 	private String name;
 
 	private ManufacturerDTO manufacturerDto;

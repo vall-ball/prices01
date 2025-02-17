@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
-import ru.vallball.prices01.dao.CategoryRepository;
-import ru.vallball.prices01.dao.ManufacturerRepository;
 import ru.vallball.prices01.dto.ProductDTO;
 import ru.vallball.prices01.model.Product;
 import ru.vallball.prices01.service.ProductService;
@@ -32,13 +30,6 @@ public class ProductController {
 	@Autowired
 	ProductService productService;
 	
-	@Autowired
-	CategoryRepository categoryRepository;
-	
-	@Autowired
-	ManufacturerRepository manufacturerRepository;
-
-
 	@GetMapping
 	public List<ProductDTO> list() {
 		List<ProductDTO> list = new ArrayList<>();
@@ -49,7 +40,7 @@ public class ProductController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Object> createCategory(@Valid @RequestBody ProductDTO productDto) {
+	public ResponseEntity<Object> createProduct(@Valid @RequestBody ProductDTO productDto) {
 		Product product = ProductConverter.convertToProduct(productDto);
 		productService.save(product);
 		return new ResponseEntity<>("Product is created successfully", HttpStatus.CREATED);
@@ -90,7 +81,7 @@ public class ProductController {
 	@GetMapping("/category/{nameOfCategory}")
 	public List<ProductDTO> listOfProductsByCategory(@PathVariable(value = "nameOfCategory") String name) {
 		List<ProductDTO> list = new ArrayList<>();
-		for (Product p : productService.listOfProductsByCategory(categoryRepository.findCategoryByName(name))) {
+		for (Product p : productService.listOfProductsByCategory(name)) {
 			list.add(ProductConverter.convertToProductDto(p));
 		}
 		return list;
@@ -99,7 +90,7 @@ public class ProductController {
 	@GetMapping("/manufacturer/{nameOfManufacturer}")
 	public List<ProductDTO> listOfProductsByManufacturer(@PathVariable(value = "nameOfManufacturer") String name) {
 		List<ProductDTO> list = new ArrayList<>();
-		for (Product p : productService.listOfProductsByManufacturer(manufacturerRepository.findManufacturerByName(name))) {
+		for (Product p : productService.listOfProductsByManufacturer(name)) {
 			list.add(ProductConverter.convertToProductDto(p));
 		}
 		return list;

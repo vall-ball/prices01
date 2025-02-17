@@ -8,7 +8,7 @@ import ru.vallball.prices01.model.Category;
 import ru.vallball.prices01.model.Manufacturer;
 import ru.vallball.prices01.model.Product;
 
-public interface ProductRepository extends JpaRepository<Product, Long>{
+public interface ProductRepository extends JpaRepository<Product, Long> {
 
 	public List<Product> findAllByOrderByNameAsc();
 

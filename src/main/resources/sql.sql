@@ -77,3 +77,31 @@ TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.products
     OWNER to postgres;
+    
+    
+-- Table: public.purchases
+
+-- DROP TABLE IF EXISTS public.purchases;
+
+CREATE TABLE IF NOT EXISTS public.purchases
+(
+    id integer NOT NULL DEFAULT nextval('purchases_id_seq'::regclass),
+    product_id integer NOT NULL,
+    date date NOT NULL,
+    retailer_id integer NOT NULL,
+    price integer NOT NULL,
+    CONSTRAINT purchases_pkey PRIMARY KEY (id),
+    CONSTRAINT purchases_product_id_fkey FOREIGN KEY (product_id)
+        REFERENCES public.products (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT purchases_retailer_id_fkey FOREIGN KEY (retailer_id)
+        REFERENCES public.retailers (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.purchases
+    OWNER to postgres;

@@ -4,7 +4,7 @@ import ru.vallball.prices01.dto.ProductDTO;
 import ru.vallball.prices01.model.Product;
 
 public class ProductConverter {
-	public static Product convertToProduct (ProductDTO productDTO) {
+	public static Product convertToProduct(ProductDTO productDTO) {
 		Product product = new Product();
 		product.setName(productDTO.getName());
 		if (productDTO.getCategoryDto() == null) {

@@ -10,8 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.vallball.prices01.dao.CategoryRepository;
 import ru.vallball.prices01.dao.ManufacturerRepository;
 import ru.vallball.prices01.dao.ProductRepository;
-import ru.vallball.prices01.model.Category;
-import ru.vallball.prices01.model.Manufacturer;
 import ru.vallball.prices01.model.Product;
 
 @Service
@@ -68,13 +66,13 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<Product> listOfProductsByCategory(Category category) {
-		return productRepository.findByCategory(category);
+	public List<Product> listOfProductsByCategory(String name) {	
+		return productRepository.findByCategory(categoryRepository.findCategoryByName(name));
 	}
 
 	@Override
-	public List<Product> listOfProductsByManufacturer(Manufacturer manufacturer) {
-		return productRepository.findByManufacturer(manufacturer);
+	public List<Product> listOfProductsByManufacturer(String name) {
+		return productRepository.findByManufacturer(manufacturerRepository.findManufacturerByName(name));
 	}
 
 }
